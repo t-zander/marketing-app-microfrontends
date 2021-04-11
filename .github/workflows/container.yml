@@ -23,10 +23,8 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - name: Install and build
-        run: |
-        npm install,
-        npm run build
+      - run: npm install
+      - run: npm run build
 
       - uses: chrislennon/action-aws-cli@1.1
       - run: aws s3 sync dist s3://${{ secrets.AWS_S3_BUCKET_NAME }}/container/latest
