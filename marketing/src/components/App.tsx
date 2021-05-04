@@ -1,8 +1,13 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import {Route, Router, Switch} from 'react-router-dom';
 import Landing from './Landing';
 import Pricing from './Pricing';
-import { StylesProvider, createGenerateClassName } from '@material-ui/core';
+import {createGenerateClassName, StylesProvider} from '@material-ui/core';
+import {History} from 'history';
+
+export interface AppProps {
+  history: History;
+}
 
 // prefixes all classes for marketing app with 'container' instead of jss
 // by default it will create smth like jss-1
@@ -13,10 +18,10 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'marketing'
 });
 
-const App = () => {
+const App = ({ history }: AppProps) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
           <Route exact path="/">
             <Landing />
@@ -25,7 +30,7 @@ const App = () => {
             <Pricing />
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     </StylesProvider>
   );
 };
