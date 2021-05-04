@@ -6,17 +6,18 @@ const packageJson = require('../package.json');
 const devConfig = {
   mode: 'development',
   devServer: {
-    port: 3000,
+    port: 3002,
     historyApiFallback: {
       index: 'index.html'
     }
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'container',
-      remotes: {
-        marketing: 'marketing@http://localhost:3001/remoteEntry.js',
-        auth: 'auth@http://localhost:3002/remoteEntry.js'
+      // name of the mfe
+      name: 'auth',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './AuthApp': './src/bootstrap'
       },
       shared: packageJson.dependencies
     })

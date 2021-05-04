@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import MarketingApp from './components/MarketingApp';
 import Header from './components/Header';
 import { createGenerateClassName, StylesProvider } from '@material-ui/core';
+import MarketingMFE from './mfes/MarketingMFE';
+import AuthMFE from './mfes/AuthMFE';
 
 // prefixes all classes for marketing app with 'container' instead of jss
 // by default it will create smth like jss-1
@@ -19,7 +20,8 @@ function App() {
       <StylesProvider generateClassName={generateClassName}>
         <div>
           <Header />
-          <MarketingApp />
+          <MarketingMFE />
+          <AuthMFE />
         </div>
       </StylesProvider>
     </BrowserRouter>
