@@ -6,17 +6,18 @@ import { createMemoryHistory, createBrowserHistory, History } from 'history';
 export interface AdditionalMountOptions {
   onNavigate?: () => void;
   defaultHistory?: History;
+  isSignedIn: boolean;
 }
 const mount = (
   el: Element | DocumentFragment,
-  { onNavigate, defaultHistory }: AdditionalMountOptions
+  { onNavigate, defaultHistory, isSignedIn }: AdditionalMountOptions
 ) => {
   const history = defaultHistory || createMemoryHistory();
 
   if (onNavigate) {
     history.listen(onNavigate);
   }
-  ReactDOM.render(<App history={history} />, el);
+  ReactDOM.render(<App history={history} isSignedIn={isSignedIn} />, el);
   return {
     onParentNavigate({ pathname: nextPathName }: Location) {
       const { pathname: currentPathName } = history.location;
@@ -32,7 +33,8 @@ if (process.env.NODE_ENV === 'development') {
   // we are running marketing mfe in isolation, not through container
   if (el) {
     mount(el, {
-      defaultHistory: createBrowserHistory()
+      defaultHistory: createBrowserHistory(),
+      isSignedIn: false
     });
   }
 }

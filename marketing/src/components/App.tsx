@@ -1,12 +1,13 @@
 import React from 'react';
-import {Route, Router, Switch} from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import Landing from './Landing';
 import Pricing from './Pricing';
-import {createGenerateClassName, StylesProvider} from '@material-ui/core';
-import {History} from 'history';
+import { createGenerateClassName, StylesProvider } from '@material-ui/core';
+import { History } from 'history';
 
 export interface AppProps {
   history: History;
+  isSignedIn: boolean;
 }
 
 // prefixes all classes for marketing app with 'container' instead of jss
@@ -18,7 +19,7 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'marketing'
 });
 
-const App = ({ history }: AppProps) => {
+const App = ({ history, isSignedIn }: AppProps) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <Router history={history}>

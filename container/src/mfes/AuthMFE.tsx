@@ -1,11 +1,13 @@
-import React, { ReactElement, useEffect, useRef } from 'react';
+import React, { Dispatch, ReactElement, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 // @ts-ignore
 import { mount as mountAuthApp } from 'auth/AuthApp';
 
-interface Props {}
+interface Props {
+  setIsSignedIn: Dispatch<boolean>;
+}
 
-function AuthMFE({}: Props): ReactElement {
+function AuthMFE({ setIsSignedIn }: Props): ReactElement {
   const authAppContainerRef = useRef<HTMLDivElement>(null);
   const history = useHistory();
 
@@ -19,7 +21,10 @@ function AuthMFE({}: Props): ReactElement {
             history.push(nextPathName);
           }
         },
-        initialPath: history.location.pathname
+        initialPath: history.location.pathname,
+        onSignIn: () => {
+          setIsSignedIn(true);
+        }
       });
       history.listen(onParentNavigate);
     }

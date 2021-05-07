@@ -7,10 +7,16 @@ export interface AdditionalMountOptions {
   onNavigate?: () => void;
   defaultHistory?: History;
   initialPath?: string;
+  onSignIn?: () => void;
 }
 const mount = (
   el: Element | DocumentFragment,
-  { onNavigate, defaultHistory, initialPath }: AdditionalMountOptions
+  {
+    onNavigate,
+    onSignIn = () => {},
+    defaultHistory,
+    initialPath
+  }: AdditionalMountOptions
 ) => {
   const history =
     defaultHistory ||
@@ -21,7 +27,7 @@ const mount = (
   if (onNavigate) {
     history.listen(onNavigate);
   }
-  ReactDOM.render(<App history={history} />, el);
+  ReactDOM.render(<App history={history} onSignIn={onSignIn} />, el);
   return {
     onParentNavigate({ pathname: nextPathName }: Location) {
       const { pathname: currentPathName } = history.location;

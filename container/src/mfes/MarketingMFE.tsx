@@ -3,9 +3,11 @@ import { useHistory } from 'react-router-dom';
 // @ts-ignore
 import { mount as mountMarketingApp } from 'marketing/MarketingApp';
 
-interface Props {}
+interface Props {
+  isSignedIn: boolean;
+}
 
-function MarketingMFE({}: Props): ReactElement {
+function MarketingMFE({ isSignedIn }: Props): ReactElement {
   const marketingAppContainerRef = useRef<HTMLDivElement>(null);
   const history = useHistory();
 
@@ -21,7 +23,8 @@ function MarketingMFE({}: Props): ReactElement {
               history.push(nextPathName);
             }
           },
-          initialPath: history.location.pathname
+          initialPath: history.location.pathname,
+          isSignedIn
         }
       );
       history.listen(onParentNavigate);
