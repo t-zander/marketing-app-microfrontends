@@ -6,12 +6,17 @@ import { createMemoryHistory, createBrowserHistory, History } from 'history';
 export interface AdditionalMountOptions {
   onNavigate?: () => void;
   defaultHistory?: History;
+  initialPath?: string;
 }
 const mount = (
   el: Element | DocumentFragment,
-  { onNavigate, defaultHistory }: AdditionalMountOptions
+  { onNavigate, defaultHistory, initialPath }: AdditionalMountOptions
 ) => {
-  const history = defaultHistory || createMemoryHistory();
+  const history =
+    defaultHistory ||
+    createMemoryHistory({
+      initialEntries: [initialPath || '/']
+    });
 
   if (onNavigate) {
     history.listen(onNavigate);

@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Router, Switch } from 'react-router-dom';
 import { createGenerateClassName, StylesProvider } from '@material-ui/core';
 import { History } from 'history';
+import SignIn from './Signin';
+import SignUp from './Signup';
 
 export interface AppProps {
   history: History;
@@ -21,8 +23,11 @@ const App = ({ history }: AppProps) => {
     <StylesProvider generateClassName={generateClassName}>
       <Router history={history}>
         <Switch>
-          <Route exact path="/auth/sign-in">
-            <h4>Hello auth</h4>
+          <Route path="/auth/sign-in">
+            <SignIn onSignIn={() => {}} />
+          </Route>
+          <Route path="/auth/sign-up">
+            <SignUp onSignUp={() => {}} />
           </Route>
         </Switch>
       </Router>

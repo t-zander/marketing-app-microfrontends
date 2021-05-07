@@ -18,7 +18,8 @@ function AuthMFE({}: Props): ReactElement {
           if (currentPathName !== nextPathName) {
             history.push(nextPathName);
           }
-        }
+        },
+        initialPath: history.location.pathname
       });
       history.listen(onParentNavigate);
     }

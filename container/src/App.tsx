@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import { createGenerateClassName, StylesProvider } from '@material-ui/core';
 import MarketingMFE from './mfes/MarketingMFE';
@@ -20,8 +20,14 @@ function App() {
       <StylesProvider generateClassName={generateClassName}>
         <div>
           <Header />
-          <MarketingMFE />
-          <AuthMFE />
+          <Switch>
+            <Route path="/auth">
+              <AuthMFE />
+            </Route>
+            <Route path="/">
+              <MarketingMFE />
+            </Route>
+          </Switch>
         </div>
       </StylesProvider>
     </BrowserRouter>
