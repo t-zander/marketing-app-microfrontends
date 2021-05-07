@@ -5,7 +5,7 @@ import { mount as mountMarketingApp } from 'marketing/MarketingApp';
 
 interface Props {}
 
-function MarketingApp({}: Props): ReactElement {
+function MarketingMFE({}: Props): ReactElement {
   const marketingAppContainerRef = useRef<HTMLDivElement>(null);
   const history = useHistory();
 
@@ -20,7 +20,8 @@ function MarketingApp({}: Props): ReactElement {
             if (currentPathName !== nextPathName) {
               history.push(nextPathName);
             }
-          }
+          },
+          initialPath: history.location.pathname
         }
       );
       history.listen(onParentNavigate);
@@ -30,4 +31,4 @@ function MarketingApp({}: Props): ReactElement {
   return <div ref={marketingAppContainerRef} />;
 }
 
-export default MarketingApp;
+export default MarketingMFE;
