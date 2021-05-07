@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Router, Switch } from 'react-router-dom';
 import { createGenerateClassName, StylesProvider } from '@material-ui/core';
 import { History } from 'history';
@@ -7,6 +7,7 @@ import SignUp from './Signup';
 
 export interface AppProps {
   history: History;
+  onSignIn: () => void;
 }
 
 // prefixes all classes for marketing app with 'container' instead of jss
@@ -18,16 +19,16 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'auth'
 });
 
-const App = ({ history }: AppProps) => {
+const App = ({ history, onSignIn }: AppProps) => {
   return (
     <StylesProvider generateClassName={generateClassName}>
       <Router history={history}>
         <Switch>
           <Route path="/auth/sign-in">
-            <SignIn onSignIn={() => {}} />
+            <SignIn onSignIn={onSignIn} />
           </Route>
           <Route path="/auth/sign-up">
-            <SignUp onSignUp={() => {}} />
+            <SignUp onSignUp={onSignIn} />
           </Route>
         </Switch>
       </Router>
