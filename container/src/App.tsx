@@ -1,5 +1,7 @@
-import React, { Suspense, lazy, useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
+import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
 import Header from './components/Header';
 import {
   createGenerateClassName,
@@ -7,6 +9,7 @@ import {
   StylesProvider
 } from '@material-ui/core';
 import Progress from './components/Progress';
+import DashboardMFE from './mfes/DashboardMFE';
 
 const AuthMFE = lazy(() => import('./mfes/AuthMFE'));
 const MarketingMFE = lazy(() => import('./mfes/MarketingMFE'));
@@ -20,32 +23,42 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'container'
 });
 
+const history = createBrowserHistory();
+
 function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
+
+  useEffect(() => {
+    if (isSignedIn) {
+      history.push('/dashboard');
+    }
+  }, [isSignedIn]);
 
   const onSignOut = () => {
     setIsSignedIn(false);
   };
 
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <StylesProvider generateClassName={generateClassName}>
-        <div>
-          <CssBaseline />
-          <Header isSignedIn={isSignedIn} onSignOut={onSignOut} />
-          <Suspense fallback={<Progress />}>
-            <Switch>
-              <Route path="/auth">
-                <AuthMFE setIsSignedIn={setIsSignedIn} />
-              </Route>
-              <Route path="/">
-                <MarketingMFE isSignedIn={isSignedIn} />
-              </Route>
-            </Switch>
-          </Suspense>
-        </div>
+        <CssBaseline />
+        <Header isSignedIn={isSignedIn} onSignOut={onSignOut} />
+        <Suspense fallback={<Progress />}>
+          <Switch>
+            <Route path="/auth">
+              <AuthMFE setIsSignedIn={setIsSignedIn} />
+            </Route>
+            <Route path="/dashboard">
+              {!isSignedIn && <Redirect to="/" />}
+              <DashboardMFE />
+            </Route>
+            <Route path="/">
+              <MarketingMFE isSignedIn={isSignedIn} />
+            </Route>
+          </Switch>
+        </Suspense>
       </StylesProvider>
-    </BrowserRouter>
+    </Router>
   );
 }
 
